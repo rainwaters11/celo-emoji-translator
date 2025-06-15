@@ -1,0 +1,5 @@
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/packages/react-app/$1" }],
+  "buildCommand": "cd packages/react-app && npm install && npm run build",
+  "outputDirectory": "packages/react-app/.next"
+}

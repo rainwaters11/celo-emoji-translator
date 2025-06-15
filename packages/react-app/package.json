@@ -43,7 +43,13 @@
     "typescript": "^5.6.3"
   },
   "browser": {
-    "net": false
+    "net": false,
+    "fs": false,
+    "path": false,
+    "os": false
+  },
+  "resolutions": {
+    "react-native": "*"
   },
   "author": "Viral sangani"
 }
