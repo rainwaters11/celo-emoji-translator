@@ -4,7 +4,7 @@ A fun, mobile-first dApp built for the Celo ecosystem that transforms your text 
 
 ---
 
-## 🚀 About the Project
+## About the Project
 
 The **Celo Emoji Translator** is a playful decentralized application (dApp) built with Celo’s **mobile-first philosophy** in mind, specifically optimized for **MiniPay**. It allows users to type any message and instantly see it “translated” into a vibrant string of emojis inspired by the Celo blockchain’s eco-friendly and community-forward ethos — think 🌳, 💰, 🌟, and 📱.
 
@@ -12,23 +12,23 @@ This is a **purely front-end** experience — no wallets, no transactions, no ga
 
 ---
 
-## ✨ Features
+## Features
 
-- **🔤 Real-time Emoji Translation** – See your text transformed instantly.
-- **🌍 Celo-Themed Emojis** – Special mappings for common letters and Celo-specific keywords like `celo` and `minipay`.
-- **📱 Mobile-First Design** – Tailored for MiniPay and mobile browsers using **Tailwind CSS**.
-- **📋 Copy to Clipboard** – Share your emoji creations with ease.
-- **🛑 No Blockchain Transactions** – Fully front-end; no wallet or gas fees required.
+- ** Real-time Emoji Translation** – See your text transformed instantly.
+- ** Celo-Themed Emojis** – Special mappings for common letters and Celo-specific keywords like `celo` and `minipay`.
+- ** Mobile-First Design** – Tailored for MiniPay and mobile browsers using **Tailwind CSS**.
+- ** Copy to Clipboard** – Share your emoji creations with ease.
+- ** No Blockchain Transactions** – Fully front-end; no wallet or gas fees required.
 
 ---
 
-## 📱 Celo & MiniPay Integration
+## Celo & MiniPay Integration
 
 This dApp is crafted to shine within the **Celo MiniApp ecosystem**. MiniPay — Celo’s mobile wallet — serves as a smooth hosting environment for simple, accessible apps. The Emoji Translator is a great example of what’s possible without smart contracts, offering **utility and fun** right inside a user's wallet experience.
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **React** – For creating a dynamic and interactive UI.
 - **Next.js** – Production-ready React framework (via Celo Composer).
