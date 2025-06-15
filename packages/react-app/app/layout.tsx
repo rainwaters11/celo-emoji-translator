@@ -1,6 +1,7 @@
-import '@/styles/globals.css';
+// import '@/styles/globals.css';  // Commented out to eliminate path resolution issues
 
-import { AppProvider } from '@/providers/AppProvider';
+// Import the AppProvider component from the simplified file 
+import { AppProvider } from '../providers/SimpleAppProvider';
 
 export default function RootLayout({
   children,

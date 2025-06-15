@@ -1,193 +1,153 @@
+// This special line tells React that this component should run in the 'client' (browser) environment.
 "use client";
 
-/* eslint-disable react-hooks/exhaustive-deps */
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useWeb3 } from "@/contexts/useWeb3";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+// We need React to build our interactive webpage parts.
+import React, { useState, ChangeEvent } from 'react';
 
-export default function Home() {
-    const {
-        address,
-        getUserAddress,
-        sendCUSD,
-        mintMinipayNFT,
-        getNFTs,
-        signTransaction,
-    } = useWeb3();
+// Our Emoji Translator App component
+function EmojiTranslatorApp() {
+    // These are special "variables" for React that remember things.
+    // `inputText` will hold what you type.
+    // `setInputValue` is how we change `inputText`.
+    // `''` means it starts empty.
+    const [inputText, setInputText] = useState('');
 
-    const [cUSDLoading, setCUSDLoading] = useState(false);
-    const [nftLoading, setNFTLoading] = useState(false);
-    const [signingLoading, setSigningLoading] = useState(false);
-    const [userOwnedNFTs, setUserOwnedNFTs] = useState<string[]>([]);
-    const [tx, setTx] = useState<any>(undefined);
-    const [amountToSend, setAmountToSend] = useState<string>("0.1");
-    const [messageSigned, setMessageSigned] = useState<boolean>(false); // State to track if a message was signed
+    // `translatedEmoji` will hold our emoji message.
+    // `setTranslatedEmoji` is how we change `translatedEmoji`.
+    // `''` means it starts empty.
+    const [translatedEmoji, setTranslatedEmoji] = useState('');
 
+    // This is our secret codebook for translating letters to emojis!
+    // We'll use Celo-themed emojis!
+    const emojiMap: Record<string, string> = {
+        'a': '🌳', 'b': '💰', 'c': '🌟', 'd': '📱', 'e': '💚',
+        'f': '🍃', 'g': '✨', 'h': '🌱', 'i': '💡', 'j': '🔗',
+        'k': '💎', 'l': '🚀', 'm': '🌎', 'n': '🌈', 'o': '💡',
+        'p': '⚡', 'q': '🔑', 'r': '🔄', 's': '✨', 't': '⏱️',
+        'u': '🤝', 'v': '📈', 'w': '🌐', 'x': '🛑', 'y': '✅',
+        'z': '💡',
+        // Also map some numbers and common punctuation
+        '0': '0️⃣', '1': '1️⃣', '2': '2️⃣', '3': '3️⃣', '4': '4️⃣',
+        '5': '5️⃣', '6': '6️⃣', '7': '7️⃣', '8': '8️⃣', '9': '9️⃣',
+        '!': '❗️', '?': '❓', '.': '▪️', ',': '▪️', ' ': '〰️', // Space gets a wave
+        // Common Celo words (longer words get special treatment!)
+        'celo': '💚🌳💰🌟', // A special emoji combo for "celo"
+        'minipay': '📱💸✨', // A special combo for "minipay"
+        'hello': '👋🌎',
+        'world': '🌍🌐',
+        'blockchain': '🔗⛓️',
+        'money': '💰💸',
+        'coin': '🪙✨',
+    };
 
-    useEffect(() => {
-        getUserAddress();
-    }, []);
+    // This function does the actual translating!
+    const translateToEmoji = (text: string): string => {
+        let result = text.toLowerCase(); // Convert everything to lowercase first
 
-    useEffect(() => {
-        const getData = async () => {
-            const tokenURIs = await getNFTs();
-            setUserOwnedNFTs(tokenURIs);
-        };
-        if (address) {
-            getData();
-        }
-    }, [address]);
-
-    async function sendingCUSD() {
-        if (address) {
-            setSigningLoading(true);
-            try {
-                const tx = await sendCUSD(address, amountToSend);
-                setTx(tx);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setSigningLoading(false);
+        // Handle multi-character words first to avoid partial matches
+        for (const word in emojiMap) {
+            // If the word is longer than 1 character and exists in our map
+            if (word.length > 1 && result.includes(word)) {
+                // Replace the word with its emoji combo
+                // We use a regular expression with 'g' to replace ALL occurrences
+                result = result.replace(new RegExp(word, 'g'), emojiMap[word]);
+                // Ensure emojis for words aren't then split into individual chars
+                // This is a simple approach, more robust would involve tokenization
             }
         }
-    }
 
-    async function signMessage() {
-        setCUSDLoading(true);
-        try {
-            await signTransaction();
-            setMessageSigned(true);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setCUSDLoading(false);
+        // Now, go through character by character for single letters/symbols
+        let finalEmojiString = '';
+        for (let i = 0; i < result.length; i++) {
+            const char = result[i];
+            // If we find the character in our emojiMap, use its emoji.
+            // Otherwise, just keep the original character.
+            // This part might override multi-char emojis if not careful,
+            // but for this simple cipher it's acceptable.
+            finalEmojiString += emojiMap[char] || char;
         }
-    }
+        return finalEmojiString;
+    };
 
+    // This function runs every time you type something in the text box.
+    const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
+        const newText = event.target.value; // Get what you typed
+        setInputText(newText); // Update the variable that stores your text
+        setTranslatedEmoji(translateToEmoji(newText)); // Translate it and update the emoji message!
+    };
 
-    async function mintNFT() {
-        setNFTLoading(true);
-        try {
-            const tx = await mintMinipayNFT();
-            const tokenURIs = await getNFTs();
-            setUserOwnedNFTs(tokenURIs);
-            setTx(tx);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setNFTLoading(false);
-        }
-    }
-
-
-
+    // This is what our webpage will look like (HTML-like code inside JavaScript!)
     return (
-        <div className="flex flex-col justify-center items-center">
-            {!address && (
-                <div className="h1">Please install Metamask and connect.</div>
-            )}
-            {address && (
-                <div className="h1">
-                    There you go... a canvas for your next Minipay project!
+        // Main container for the whole app
+        // Centered content, min height for full screen, dark background
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-100 to-lime-200 p-4 sm:p-8">
+
+            {/* Application Title */}
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-green-800 mb-4 sm:mb-6 text-center drop-shadow-md">
+                Celo <span className="text-lime-700">Emoji</span> Translator
+            </h1>
+
+            {/* Description */}
+            <p className="text-lg sm:text-xl text-green-700 mb-8 sm:mb-10 text-center max-w-xl">
+                Unleash your creativity! Type any message and watch it magically transform into a fun, Celo-themed emoji code.
+            </p>
+
+            {/* Main content card */}
+            <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-green-300 transform transition-transform duration-300 hover:scale-102">
+
+                {/* Input area */}
+                <textarea
+                    className="w-full p-4 sm:p-5 mb-6 text-lg sm:text-xl border-2 border-green-400 rounded-lg shadow-inner focus:outline-none focus:ring-4 focus:ring-green-500/50 transition-all duration-300 resize-y placeholder-gray-400 font-mono"
+                    placeholder="Type your message here..."
+                    value={inputText}
+                    onChange={handleInputChange} // When text changes, run handleInputChange
+                    rows={6} // Increased rows for more visible input area
+                ></textarea>
+
+                {/* Translated Emoji display area */}
+                <div className="w-full p-6 sm:p-7 bg-green-50 border-2 border-green-500 rounded-lg shadow-inner min-h-[120px] sm:min-h-[150px] flex items-center justify-center text-4xl sm:text-5xl font-bold text-green-800 break-words whitespace-pre-wrap overflow-hidden leading-tight text-center relative">
+                    {/* Conditional display for placeholder text */}
+                    {translatedEmoji ? translatedEmoji : <span className="text-gray-400 text-xl sm:text-2xl font-normal">Your emoji message will appear here...</span>}
+                    {/* Small tag at bottom right */}
+                    <span className="absolute bottom-2 right-3 text-gray-300 text-sm italic">Coded with fun!</span>
                 </div>
-            )}
 
-            <a
-                href="https://faucet.celo.org/alfajores"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 mb-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-                Get Test Tokens
-            </a>
+                {/* Copy button */}
+                <button
+                    onClick={() => {
+                        // This copies the emoji text to your clipboard!
+                        if (translatedEmoji) {
+                            // document.execCommand('copy') is used because navigator.clipboard.writeText
+                            // might not work directly inside some environments like iframes.
+                            const tempInput = document.createElement('textarea');
+                            tempInput.value = translatedEmoji;
+                            document.body.appendChild(tempInput);
+                            tempInput.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(tempInput);
+                            // Custom message box instead of alert for better UX
+                            const messageBox = document.createElement('div');
+                            messageBox.textContent = 'Emoji message copied!';
+                            messageBox.className = 'fixed bottom-5 left-1/2 -translate-x-1/2 bg-green-600 text-white px-5 py-3 rounded-full shadow-lg text-lg animate-fade-in-out z-50';
+                            document.body.appendChild(messageBox);
+                            setTimeout(() => {
+                                messageBox.remove();
+                            }, 2000); // Remove message after 2 seconds
+                        }
+                    }}
+                    className="mt-8 w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-3 sm:py-4 px-6 rounded-full shadow-lg transition-all duration-300 text-xl sm:text-2xl transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-lime-500/50"
+                >
+                    ✨ Copy Emoji Message ✨
+                </button>
+            </div>
 
-            {address && (
-                <>
-                    <div className="h2 text-center">
-                        Your address:{" "}
-                        <span className="font-bold text-sm">{address}</span>
-                    </div>
-                    {tx && (
-                        <p className="font-bold mt-4">
-                            Tx Completed:{" "}
-                            <a
-                                href={`https://alfajores.celoscan.io/tx/${tx.transactionHash}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 underline"
-                            >
-                                {tx.transactionHash.substring(0, 6)}...{tx.transactionHash.substring(tx.transactionHash.length - 6)}
-                            </a>
-                        </p>
-                    )}
-                    <div className="w-full px-3 mt-7">
-                        <Input
-                            type="number"
-                            value={amountToSend}
-                            onChange={(e) => setAmountToSend(e.target.value)}
-                            placeholder="Enter amount to send"
-                            className="border rounded-md px-3 py-2 w-full mb-3"
-                        ></Input>
-                        <Button
-                            loading={signingLoading}
-                            onClick={sendingCUSD}
-                            title={`Send ${amountToSend} cUSD to your own address`}
-                            widthFull
-                        />
-                    </div>
-
-                    <div className="w-full px-3 mt-6">
-                        <Button
-                            loading={cUSDLoading}
-                            onClick={signMessage}
-                            title="Sign a Message"
-                            widthFull
-                        />
-                    </div>
-
-                    {messageSigned && (
-                        <div className="mt-5 text-green-600 font-bold">
-                            Message signed successfully!
-                        </div>
-                    )}
-
-                    <div className="w-full px-3 mt-5">
-                        <Button
-                            loading={nftLoading}
-                            onClick={mintNFT}
-                            title="Mint Minipay NFT"
-                            widthFull
-                        />
-                    </div>
-
-                    {userOwnedNFTs.length > 0 ? (
-                        <div className="flex flex-col items-center justify-center w-full mt-7">
-                            <p className="font-bold">My NFTs</p>
-                            <div className="w-full grid grid-cols-2 gap-3 mt-3 px-2">
-                                {userOwnedNFTs.map((tokenURI, index) => (
-                                    <div
-                                        key={index}
-                                        className="p-2 border-[3px] border-colors-secondary rounded-xl"
-                                    >
-                                        <Image
-                                            alt="MINIPAY NFT"
-                                            src={tokenURI}
-                                            className="w-[160px] h-[200px] object-cover"
-                                            width={160}
-                                            height={200}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="mt-5">You do not have any NFTs yet</div>
-                    )}
-
-                </>
-            )}
+            {/* Footer / Credit */}
+            <p className="text-sm text-gray-600 mt-12 text-center">
+                Built with 💚 for Celo MiniPay. Happy translating!
+            </p>
         </div>
     );
 }
+
+// Make our component available to be used as the default page
+export default EmojiTranslatorApp;
