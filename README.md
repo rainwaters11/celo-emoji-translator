@@ -1,229 +1,95 @@
-# Celo Emoji Translator
+# 🌟 Celo Emoji Translator
 
-<!-- TABLE OF CONTENTS -->
+A fun, mobile-first dApp built for the Celo ecosystem that transforms your text messages into quirky, Celo-themed emoji sequences!
 
-<div>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li><a href="#about-the-project">About The Project</a></li>
-      <ol>
-        <li><a href="#built-with">Built With</a></li>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#minipay">MiniPay</a></li>
-     </ol>
-    <li><a href="#how-to-use-celo-composer">How to use Celo Composer</a></li>
-        <ol>
-          <li><a href="#install-dependencies">Install Dependencies</a></li>
-          <li><a href="#deploy-a-smart-contract">Deploy a Smart Contract</a></li>
-          <li><a href="#deploy-your-dapp-locally">Deploy your Dapp Locally</a></li>
-          <li><a href="#add-ui-components">Add UI Components</a></li>
-          <li><a href="#deploy-with-vercel">Deploy with Vercel</a></li>
-          <li><a href="#supported-frameworks">Supported Frameworks</a></li>
-        </ol>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#support">Support</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</div>
+---
 
-<!-- ABOUT THE PROJECT -->
+## 🚀 About the Project
 
-## About The Project
+The **Celo Emoji Translator** is a playful decentralized application (dApp) built with Celo’s **mobile-first philosophy** in mind, specifically optimized for **MiniPay**. It allows users to type any message and instantly see it “translated” into a vibrant string of emojis inspired by the Celo blockchain’s eco-friendly and community-forward ethos — think 🌳, 💰, 🌟, and 📱.
 
-Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, templates, deployment and component support, and Celo specific functionality to help you get started with your next dApp. 
+This is a **purely front-end** experience — no wallets, no transactions, no gas — just quick, joyful interaction within the Celo ecosystem.
 
-It is the perfect lightweight starter-kit for any hackathon and for quickly testing out integrations and deployments on Celo.
+---
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+## ✨ Features
 
-## Built With
+- **🔤 Real-time Emoji Translation** – See your text transformed instantly.
+- **🌍 Celo-Themed Emojis** – Special mappings for common letters and Celo-specific keywords like `celo` and `minipay`.
+- **📱 Mobile-First Design** – Tailored for MiniPay and mobile browsers using **Tailwind CSS**.
+- **📋 Copy to Clipboard** – Share your emoji creations with ease.
+- **🛑 No Blockchain Transactions** – Fully front-end; no wallet or gas fees required.
 
-Celo Composer is built on Celo to make it simple to build dApps using a variety of front-end frameworks, and libraries.
+---
 
-- [Celo](https://celo.org/)
-- [Solidity](https://docs.soliditylang.org/en/v0.8.19/)
-- [Hardhat](https://hardhat.org/)
-- [React.js](https://reactjs.org/)
-- [Next.js](https://nextjs.org/)
-- [viem](https://viem.sh/)
-- [Tailwind](https://tailwindcss.com/)
+## 📱 Celo & MiniPay Integration
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+This dApp is crafted to shine within the **Celo MiniApp ecosystem**. MiniPay — Celo’s mobile wallet — serves as a smooth hosting environment for simple, accessible apps. The Emoji Translator is a great example of what’s possible without smart contracts, offering **utility and fun** right inside a user's wallet experience.
 
-<!-- GETTING STARTED -->
+---
 
-## Prerequisites
+## 🛠️ Technologies Used
 
-- Node (v20 or higher)
-- Git (v2.38 or higher)
+- **React** – For creating a dynamic and interactive UI.
+- **Next.js** – Production-ready React framework (via Celo Composer).
+- **Tailwind CSS** – Utility-first styling for responsive, mobile-optimized design.
+- **Celo Composer** – Project scaffolding tool used to build and structure the dApp.
 
-## MiniPay
+---
 
-Welcome to the [MiniPay](https://www.opera.com/products/minipay) wallet integration guide. MiniPay is one of the fastest growing wallets that was built out by Opera on Celo that seeks to create a simple user experience to use DApps. MiniPay is available as a standalone app and inside the Opera Mini browser on Android phones thereby allowing DApp developers to tap into a distribution of 100M users on integration.
+## 💻 Getting Started (Local Development)
 
-This guide provides information on how to develop and test your dapp for MiniPay.
+Want to remix this for your own project or contribute to the fun? Here's how to get up and running locally.
 
-To get started with MiniPay, we recommend testing the wallet and building a sample dApp using our starter kit. The following steps will guide you through setting up MiniPay, building your dApp, and testing it in the wallet.
+### 🔧 Prerequisites
 
-:::info
-Install the new [MiniPay standalone app](https://play.google.com/store/apps/details?id=com.opera.minipay) now! 🎉 📥
-:::
+Ensure you have the following installed:
 
-## How to use Celo Composer - MiniPay template
+- [Node.js (v20+)](https://nodejs.org/)
+- [Git (v2.38+)](https://git-scm.com/)
+- [VS Code](https://code.visualstudio.com/) (or your preferred editor)
 
-The easiest way to start with Celo Composer is using `@celo/celo-composer`. This CLI tool lets you quickly start building dApps on Celo, including several templates. To get started, just run the following command, and follow the steps:
+---
 
-- Step 1
+### 📥 Installation
+
+1. **Clone the repository:**
 
 ```bash
-npx @celo/celo-composer@latest create
-```
+git clone https://github.com/rainwaters11/celo-emoji-translator.git
+cd celo-emoji-translator
+Navigate to the React app:
 
-- Step 2: Provide the Project Name: You will be prompted to enter the name of your project.
+This is a monorepo (via Celo Composer), so the actual app lives in a subfolder:
 
-```text
-What is your project name: 
-```
+bash
+Copy
+Edit
+cd packages/react-app
+Rename the environment file:
 
-- Step 3: Choose to Use Hardhat: You will be asked if you want to use Hardhat. Select Yes or No.
+bash
+Copy
+Edit
+mv .env.template .env
+# On Windows:
+# rename .env.template .env
+No API keys needed for this simple app.
 
-```text
-Do you want to use Hardhat? (Y/n)
-```
+Install dependencies:
 
-- Step 4: Choose to Use a Template: You will be asked if you want to use a template. Select `Yes` .
+bash
+Copy
+Edit
+npm install
+# or
+yarn install
+Run the development server:
 
-```text
-Do you want to use a template?
-```
-
-- Step 5: Select a Template: If you chose to use a template, you will be prompted to select `MiniPay` from the list provided.
-
-- Step 6: Provide the Project Owner's Name: You will be asked to enter the project owner's name.
-
-```text
-Project Owner name:
-```
-
-- Step 7: Wait for Project Creation: The CLI will now create the project based on your inputs. This may take a few minutes.
-
-- Step 8: Follow the instructions to start the project. The same will be displayed on the console after the project is created.
-
-```text
-🚀 Your starter project has been successfully created!
-```
-
-## Install Dependencies
-
-
-Once your custom dApp has been created, just install dependencies, either with yarn:
-
-```bash
-   yarn
-```
-
-If you prefer npm, you can run:
-
-```bash
-   npm install
-```
-
-## Deploy a Smart Contract
-
-Find the detailed instructions on how to run your smart contract in [packages/hardhat/README.md](./packages/hardhat/README.md).
-
-For quick development follow these three steps:
-
-1. Change `packages/hardhat/env.template` to `packages/hardhat/env` and add your `PRIVATE_KEY` into the `.env` file.
-2. Make sure your wallet is funded when deploying to testnet or mainnet. You can get test tokens for deploying it on Alfajores from the [Celo Faucet](https://faucet.celo.org/alfajores).
-3. Run the following commands from the `packages/hardhat` folder to deploy your smart contract to the Celo Testnet Alfajores:
-
-```bash
-npx hardhat ignition deploy ./ignition/modules/MiniPay.ts --network alfajores
-```
-
-## Deploy your Dapp Locally
-
-Find the detailed instructions on how to run your frontend in the [`react-dapp` README.md](./packages/react-app/README.md).
-
-Before you start the project, please follow these steps:
-
-1. Rename the file:
-   packages/react-app/.env.template
-   to
-   packages/react-app/.env
-
-2. Open the newly renamed .env file and add your WalletConnect Cloud Project ID from [WalletConnect Cloud](https://cloud.walletconnect.com/)
-
-Once you've done that, you're all set to start your project!
-
-Run the following commands from the `packages/react-app` folder to start the project:
-
-```bash
-   yarn dev
-```
-
-If you prefer npm, you can run:
-
-```bash
-   npm run dev
-```
-
-Thank you for using Celo Composer! If you have any questions or need further assistance, please refer to the README or reach out to our team.
-
-**_🔥Voila, you have a dApp ready to go. Start building your dApp on Celo._**
-
-
-## Add UI Components
-
-To keep the Celo Composer as lightwieght as possible we didn't add any components but rather a guide on how to add the components you need yourself with a very simple to use components library. To learn how to add UI components using [ShadCN](https://ui.shadcn.com/) in this project, refer to the [UI Components Guide](./docs/UI_COMPONENTS.md).
-
-## Deploy with Vercel
-
-The Celo Composer is a great tool for hackathons and fast deployments. We created a guide for you, using the Vercel CLI to create a live deployment in minutes. For detailed instructions on deploying the Next.js app using Vercel CLI, refer to the [Deployment Guide](./docs/DEPLOYMENT_GUIDE.md).
-
-
-## Supported Frameworks
-
-### React / Nextjs
-
-- Support for Website and Progressive Web Application.
-- Works with all major crypto wallets.
-
-Check [nextjs docs](https://nextjs.org/docs) to learn more about it.
-
-### Hardhat
-
-- Robust framework for building and testing smart contracts.
-- Compatible with various Ethereum development tools and plugins.
-
-Check [hardhat docs](https://hardhat.org/hardhat-runner/docs/getting-started) to learn more about it.
-
-## Support
-
-Join the Celo Discord server at <https://chat.celo.org>. Reach out on the dedicated repo channel [here](https://discord.com/channels/600834479145353243/941003424298856448).
-
-<!-- ROADMAP -->
-
-## Roadmap
-
-See the [open issues](https://github.com/celo-org/celo-composer/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## Contributing
-
-We welcome contributions from the community.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-## License
-
-A fun dApp to translate text into Celo-themed emojis!
-
-Distributed under the MIT License. See `LICENSE` for more information.
+bash
+Copy
+Edit
+npm run dev
+# or
+yarn dev
+Your app will be accessible at http://localhost:3000 or http://localhost:5173 depending on your setup.
