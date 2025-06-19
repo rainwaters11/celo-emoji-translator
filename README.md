@@ -10,7 +10,6 @@ The **Celo Emoji Translator** is a playful decentralized application (dApp) buil
 
 ---
 
-## 🚀 New Features
 
 ### ✅ **NFT Minting on Celo (Alfajores Testnet)**
 Turn your emoji creations into unique digital collectibles using smart contracts deployed to the Celo blockchain.
