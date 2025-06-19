@@ -5,14 +5,17 @@ import { HardhatUserConfig } from 'hardhat/config';
 
 dotEnvConfig();
 
+// Default private key for testing (DO NOT USE IN PRODUCTION)
+const DEFAULT_PRIVATE_KEY = "0x0000000000000000000000000000000000000000000000000000000000000001";
+
 const config: HardhatUserConfig = {
   networks: {
     alfajores: {
-      accounts: [process.env.PRIVATE_KEY ?? '0x0'],
+      accounts: [process.env.PRIVATE_KEY || DEFAULT_PRIVATE_KEY],
       url: 'https://alfajores-forno.celo-testnet.org',
     },
     celo: {
-      accounts: [process.env.PRIVATE_KEY ?? '0x0'],
+      accounts: [process.env.PRIVATE_KEY || DEFAULT_PRIVATE_KEY], 
       url: 'https://forno.celo.org',
     },
   },
@@ -43,7 +46,15 @@ const config: HardhatUserConfig = {
   sourcify: {
     enabled: false,
   },
-  solidity: '0.8.24',
+  solidity: {
+    version: '0.8.24',
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
+  },
 };
 
 export default config;

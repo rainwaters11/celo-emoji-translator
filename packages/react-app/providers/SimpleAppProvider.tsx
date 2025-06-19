@@ -1,12 +1,19 @@
 'use client';
 
 import React from 'react';
+import { WagmiProvider } from 'wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { config } from '../lib/wagmi';
 
-// Very simple AppProvider
+const queryClient = new QueryClient();
+
+// Enhanced AppProvider with wagmi support
 export function AppProvider({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      {children}
-    </>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }

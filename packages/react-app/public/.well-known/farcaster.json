@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjAsInR5cGUiOiJjdXN0b2R5IiwiaGFzaCI6IjB4MDAwMCJ9",
+    "payload": "eyJkb21haW4iOiJjZWxvLWVtb2ppLXRyYW5zbGF0b3IudmVyY2VsLmFwcCJ9",
+    "signature": "MHg0N2IwM2EzMGY3YWEzZjQ5YzJkNzY4ZjZiOTFkNGYxODQ2Yjg5YzI5"
+  },
+  "frame": {
+    "version": "1.0.0",
+    "name": "Celo Emoji Translator",
+    "iconUrl": "https://celo-emoji-translator.vercel.app/logo.svg",
+    "homeUrl": "https://celo-emoji-translator.vercel.app",
+    "imageUrl": "https://celo-emoji-translator.vercel.app/logo.svg",
+    "buttonTitle": "Translate Text to Emojis",
+    "splashImageUrl": "https://celo-emoji-translator.vercel.app/logo.svg",
+    "splashBackgroundColor": "#35D07F",
+    "webhookUrl": "https://celo-emoji-translator.vercel.app/api/webhook"
+  }
+}

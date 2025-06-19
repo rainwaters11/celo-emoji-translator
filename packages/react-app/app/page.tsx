@@ -3,22 +3,26 @@
 
 // We need React to build our interactive webpage parts.
 import React, { useState, useEffect } from 'react'; // Added useEffect for dark mode persistence
+import Web3Connection from '../components/Web3Connection';
+import SimpleIPFSMinter from '../components/SimpleIPFSMinter';
+import EmojiNFTGallery from '../components/EmojiNFTGallery';
 
 // This is the main part of our dApp, like the central brain.
 function EmojiTranslatorApp() {
     // STATE VARIABLES: These are special "variables" for React that remember things.
-    const [inputText, setInputText] = useState(''); // Holds what you type
-    const [translatedEmoji, setTranslatedEmoji] = useState(''); // Holds our emoji message
-    const [isDarkMode, setIsDarkMode] = useState(false); // Controls the dark mode feature
-    const [showTipInfo, setShowTipInfo] = useState(false); // Controls visibility of tip information
-    const [showKeyInfo, setShowKeyInfo] = useState(false); // Controls visibility of the emoji key information
+    const [inputText, setInputText] = useState<string>(''); // Holds what you type
+    const [translatedEmoji, setTranslatedEmoji] = useState<string>(''); // Holds our emoji message
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(false); // Controls the dark mode feature
+    const [showTipInfo, setShowTipInfo] = useState<boolean>(false); // Controls visibility of tip information
+    const [showKeyInfo, setShowKeyInfo] = useState<boolean>(false); // Controls visibility of the emoji key information
+    const [connectedAddress, setConnectedAddress] = useState<string | null>(null); // Web3 wallet address
 
     // PREDEFINED CELO TIP ADDRESS (Replace with your actual Celo address if you deploy this!)
     const celoTipAddress = "0xYourCeloAddressGoesHere"; // IMPORTANT: Replace with a real Celo address (e.g., from Valora)
 
     // EMOJI MAP: Our secret codebook for translating letters and words to emojis!
     // Added more mappings for a richer translation.
-    const emojiMap = {
+    const emojiMap: { [key: string]: string } = {
         'a': '🌳', 'b': '💰', 'c': '🌟', 'd': '📱', 'e': '💚',
         'f': '🍃', 'g': '✨', 'h': '🌱', 'i': '💡', 'j': '🔗',
         'k': '💎', 'l': '🚀', 'm': '🌎', 'n': '🌈', 'o': '💡',
@@ -65,7 +69,7 @@ function EmojiTranslatorApp() {
     };
 
     // FUNCTION: This function does the actual translating!
-    const translateToEmoji = (text) => {
+    const translateToEmoji = (text: string): string => {
         let result = text.toLowerCase(); // Convert everything to lowercase first
 
         // OPTIMIZATION: Handle multi-character words (phrases) first to prevent partial matches.
@@ -93,7 +97,7 @@ function EmojiTranslatorApp() {
     };
 
     // EVENT HANDLER: Runs every time you type something in the text box.
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newText = event.target.value; // Get what you typed
         setInputText(newText); // Update the variable that stores your text
         setTranslatedEmoji(translateToEmoji(newText)); // Translate it and update the emoji message!
@@ -121,7 +125,7 @@ function EmojiTranslatorApp() {
     }, []); // Empty dependency array means this runs only once after initial render
 
     // FUNCTION: Shows a custom, temporary message box instead of `alert()`.
-    const showToast = (message) => {
+    const showToast = (message: string) => {
         const messageBox = document.createElement('div');
         messageBox.textContent = message;
         // Apply Tailwind classes for styling and animation
@@ -249,7 +253,7 @@ function EmojiTranslatorApp() {
                         placeholder="Type your message here..."
                         value={inputText}
                         onChange={handleInputChange}
-                        rows="6"
+                        rows={6}
                     ></textarea>
                     {/* Character Count for Input */}
                     <p className={`text-xs mt-1 text-right ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -393,6 +397,27 @@ function EmojiTranslatorApp() {
 
 
             </div> {/* End of Main content card */}
+
+            {/* Web3 Integration Section */}
+            <div className="w-full max-w-xl mt-8">
+                <Web3Connection 
+                    isDarkMode={isDarkMode}
+                    onAddressChange={setConnectedAddress}
+                />
+                
+                <SimpleIPFSMinter
+                    isDarkMode={isDarkMode}
+                    originalText={inputText}
+                    emojiMessage={translatedEmoji}
+                />
+            </div>
+
+            {/* NFT Gallery Section */}
+            {connectedAddress && (
+                <div className="w-full max-w-4xl mt-8">
+                    <EmojiNFTGallery isDarkMode={isDarkMode} />
+                </div>
+            )}
 
             {/* Footer / Credit */}
             <p className={`text-sm mt-12 text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
